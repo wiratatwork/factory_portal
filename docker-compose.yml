@@ -9,11 +9,29 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     volumes:
       - keycloak_data:/opt/keycloak/data
-      - ./keycloak/realm-toyota.json:/opt/keycloak/data/import/realm-toyota.json
     ports:
       - "7890:8080"
     networks:
       - factory-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: factory-postgres
+    environment:
+      POSTGRES_USER: factory
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: factory_portal
+    ports:
+      - "5433:5432"
+    volumes:
+      - factory_postgres_data:/var/lib/postgresql/data
+    networks:
+      - factory-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U factory -d factory_portal"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api:
     build:
@@ -22,6 +40,8 @@ services:
     container_name: factory-api
     environment:
       ASPNETCORE_URLS: http://+:5001
+      ConnectionStrings__DefaultConnection: ${DB_CONNECTION}
+      Bff__TokenEncryption__Key: ${BFF_TOKEN_ENCRYPTION_KEY}
       Keycloak__BaseUrl: http://keycloak:8080
       Keycloak__PublicBaseUrl: http://localhost:7890
       Keycloak__Realm: toyota
@@ -34,7 +54,10 @@ services:
     ports:
       - "5001:5001"
     depends_on:
-      - keycloak
+      keycloak:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - factory-network
     healthcheck:
@@ -42,7 +65,7 @@ services:
       interval: 15s
       timeout: 10s
       retries: 5
-      start_period: 20s
+      start_period: 30s
 
   frontend:
     build:
@@ -59,6 +82,7 @@ services:
 
 volumes:
   keycloak_data:
+  factory_postgres_data:
 
 networks:
   factory-network:
