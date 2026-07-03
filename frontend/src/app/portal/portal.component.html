@@ -1,0 +1,44 @@
+<section class="mb-8">
+  <p class="text-xs uppercase tracking-[0.14em] text-toyota-red font-semibold mb-2">Operations Gateway</p>
+  <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">Select an application to start your shift</h2>
+  <p class="text-toyota-gray max-w-3xl">Central access to production, quality, maintenance, supply chain, and people systems used across the factory.</p>
+</section>
+<section class="space-y-8" aria-label="Applications by category">
+  <article class="surface-panel rounded-xl p-5 sm:p-6">
+    <div class="flex items-center gap-2 mb-4"><h3 class="text-lg font-semibold">Production & Performance</h3><span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ productionApps.length }} apps</span></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (app of productionApps; track app.name) {
+        <button type="button" (click)="openApp(app.name)" class="catalog-card text-left rounded-xl p-4 hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer">
+          <h4 class="font-semibold text-sm leading-snug mb-2">{{ app.name }}</h4><p class="text-xs text-toyota-gray mb-3">{{ app.description }}</p><span class="text-xs rounded-full px-2 py-1 font-medium" [class]="badgeClass(app.status)">{{ app.status }}</span>
+        </button>
+      }
+    </div>
+  </article>
+  <article class="surface-panel rounded-xl p-5 sm:p-6">
+    <div class="flex items-center gap-2 mb-4"><h3 class="text-lg font-semibold">Quality & Maintenance</h3><span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ qualityApps.length }} apps</span></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      @for (app of qualityApps; track app.name) {
+        <button type="button" (click)="openApp(app.name)" class="catalog-card text-left rounded-xl p-4 hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer">
+          <h4 class="font-semibold text-sm leading-snug mb-2">{{ app.name }}</h4><p class="text-xs text-toyota-gray mb-3">{{ app.description }}</p><span class="text-xs rounded-full px-2 py-1 font-medium" [class]="badgeClass(app.status)">{{ app.status }}</span>
+        </button>
+      }
+    </div>
+  </article>
+  <article class="surface-panel rounded-xl p-5 sm:p-6">
+    <div class="flex items-center gap-2 mb-4"><h3 class="text-lg font-semibold">Supply Chain & People</h3><span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ peopleApps.length }} apps</span></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      @for (app of peopleApps; track app.name) {
+        <button type="button" (click)="openApp(app.name)" class="catalog-card text-left rounded-xl p-4 hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer">
+          <h4 class="font-semibold text-sm leading-snug mb-2">{{ app.name }}</h4><p class="text-xs text-toyota-gray mb-3">{{ app.description }}</p><span class="text-xs rounded-full px-2 py-1 font-medium" [class]="badgeClass(app.status)">{{ app.status }}</span>
+        </button>
+      }
+    </div>
+  </article>
+</section>
+<section class="surface-panel mt-8 rounded-xl p-5 sm:p-6">
+  <h3 class="text-lg font-semibold mb-3">Announcements</h3>
+  <ul class="space-y-3 text-sm text-toyota-gray">
+    <li class="flex items-start gap-2"><span class="mt-1 w-2 h-2 rounded-full bg-toyota-red shrink-0"></span><span>Monthly safety drill on Friday, 14:00 at Assembly Hall B.</span></li>
+    <li class="flex items-start gap-2"><span class="mt-1 w-2 h-2 rounded-full bg-toyota-red shrink-0"></span><span>Quality Management system update window: Saturday 22:00-23:30.</span></li>
+  </ul>
+</section>

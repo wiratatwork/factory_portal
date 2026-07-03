@@ -1,0 +1,58 @@
+services:
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:latest
+    restart: unless-stopped
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    ports:
+      - "7890:8080"
+    networks:
+      - factory-network
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: factory-api
+    environment:
+      PORT: 5001
+      KEYCLOAK_BASE_URL: http://keycloak:8080
+      KEYCLOAK_REALM: toyota
+      KEYCLOAK_CLIENT_ID: factory-portal
+    ports:
+      - "5001:5001"
+    depends_on:
+      - keycloak
+    networks:
+      - factory-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:5001/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: factory-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - factory-network
+
+volumes:
+  keycloak_data:
+
+networks:
+  factory-network:
+    driver: bridge

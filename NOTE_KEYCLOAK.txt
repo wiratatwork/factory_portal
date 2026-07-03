@@ -1,0 +1,1 @@
+ตอนที่กดเข้า http://localhost:4201/login ไม่อยากให้แสดงหน้าจอ Login ถ้า Login มาจาก Keycloak ของ factory_portal แล้ว ทำอย่างไร

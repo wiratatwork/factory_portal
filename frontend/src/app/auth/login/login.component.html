@@ -1,0 +1,54 @@
+<div class="toyota-login-bg font-sans antialiased text-toyota-charcoal bg-white min-h-screen">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <aside
+      class="hero-gradient hidden lg:flex lg:w-[52%] lg:min-h-screen p-8 lg:p-12 text-white flex-col justify-between border-r border-white/10"
+      aria-hidden="true"
+    >
+      <div>
+        <div class="flex items-center gap-3 mb-16">
+          <svg class="w-10 h-10" viewBox="0 0 48 48" fill="none">
+            <ellipse cx="24" cy="24" rx="22" ry="14" stroke="white" stroke-width="2.5" />
+            <ellipse cx="24" cy="24" rx="14" ry="8.5" stroke="white" stroke-width="2.5" />
+          </svg>
+          <span class="text-xl font-semibold tracking-[0.2em] uppercase">Toyota</span>
+        </div>
+        <p class="text-toyota-red font-medium text-sm tracking-widest uppercase mb-4">Factory Web Portal</p>
+        <h1 class="text-3xl lg:text-4xl font-semibold leading-tight tracking-tight mb-5">
+          One login.<br />All factory applications.
+        </h1>
+        <p class="text-white/75 max-w-md">
+          Access production, quality, maintenance, logistics, and HR systems from one secure portal.
+        </p>
+      </div>
+      <div class="hidden lg:flex items-center gap-6 text-sm text-white/60">
+        <span>Role-based access</span>
+        <span>•</span>
+        <span>Audit-ready</span>
+        <span>•</span>
+        <span>24/7 operations support</span>
+      </div>
+    </aside>
+
+    <main class="flex-1 flex items-center px-6 py-10 sm:px-10 lg:px-16">
+      <div class="surface-card w-full max-w-md mx-auto rounded-2xl p-6 sm:p-8">
+        <header class="mb-7">
+          <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight mb-2">Sign in to Factory Portal</h2>
+          <p class="text-toyota-gray text-sm sm:text-base">Use your plant account to continue.</p>
+        </header>
+        <p class="mb-6 rounded-lg border border-dashed border-toyota-border bg-toyota-mist px-4 py-3 text-xs text-toyota-gray leading-relaxed">
+          <span class="font-medium text-toyota-charcoal">SSO mode:</span>
+          Sign in is handled by Keycloak. Click the button below to continue.
+        </p>
+        @if (errorMessage()) {
+          <div class="mb-6 rounded-lg px-4 py-3 text-sm font-medium border bg-red-50 border-red-200 text-red-700">{{ errorMessage() }}</div>
+        }
+        <button type="button" (click)="signInWithKeycloak()" [disabled]="isSubmitting()" class="w-full h-12 rounded-lg bg-toyota-red text-white font-semibold text-sm tracking-wide uppercase transition-all duration-200 hover:bg-toyota-red-dark cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-toyota-red focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+          <span>{{ isSubmitting() ? 'Redirecting…' : 'Sign In with Keycloak' }}</span>
+          @if (isSubmitting()) {
+            <span class="spinner" aria-hidden="true"></span>
+          }
+        </button>
+      </div>
+    </main>
+  </div>
+</div>
