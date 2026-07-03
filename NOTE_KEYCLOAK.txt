@@ -1,1 +1,7 @@
-ตอนที่กดเข้า http://localhost:4201/login ไม่อยากให้แสดงหน้าจอ Login ถ้า Login มาจาก Keycloak ของ factory_portal แล้ว ทำอย่างไร
+kc_access_token, kc_refresh_token, app1_access_token, app1_refresh_token ถูกเก็บที่ไหน
+
+เก็บ kc_* ใน session storage คืออะไร
+
+ทำไมการ duplicate tab ของ factory_portal User จึงยัง log in  อยู่ได้
+
+DotNetBFF ทำอะไรบ้าง

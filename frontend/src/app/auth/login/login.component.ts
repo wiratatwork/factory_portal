@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -9,28 +9,24 @@ import { AuthService } from '../auth.service';
   imports: [CommonModule],
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal<string | null>(null);
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
-  ) {
-    if (this.authService.isAuthenticated()) {
-      void this.router.navigate(['/'], { replaceUrl: true });
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    if (await this.authService.ensureSession()) {
+      await this.router.navigate(['/'], { replaceUrl: true });
     }
   }
 
-  async signInWithKeycloak(): Promise<void> {
+  signInWithKeycloak(): void {
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
-    try {
-      await this.authService.redirectToLogin();
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'unknown error';
-      this.errorMessage.set(`Cannot open Keycloak login: ${message}`);
-      this.isSubmitting.set(false);
-    }
+    this.authService.redirectToLogin();
   }
 }

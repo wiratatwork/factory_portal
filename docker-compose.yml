@@ -3,12 +3,13 @@ services:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:latest
     restart: unless-stopped
-    command: start-dev
+    command: start-dev --import-realm
     environment:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     volumes:
       - keycloak_data:/opt/keycloak/data
+      - ./keycloak/realm-toyota.json:/opt/keycloak/data/import/realm-toyota.json
     ports:
       - "7890:8080"
     networks:
@@ -20,10 +21,16 @@ services:
       dockerfile: Dockerfile
     container_name: factory-api
     environment:
-      PORT: 5001
-      KEYCLOAK_BASE_URL: http://keycloak:8080
-      KEYCLOAK_REALM: toyota
-      KEYCLOAK_CLIENT_ID: factory-portal
+      ASPNETCORE_URLS: http://+:5001
+      Keycloak__BaseUrl: http://keycloak:8080
+      Keycloak__PublicBaseUrl: http://localhost:7890
+      Keycloak__Realm: toyota
+      Keycloak__ClientId: factory-portal
+      Keycloak__RequireHttpsMetadata: "false"
+      Bff__PublicBaseUrl: http://localhost:4200
+      Bff__SessionIdleMinutes: "30"
+      Bff__EnableSilentSso: "false"
+      Cors__AllowedOrigins__0: http://localhost:4200
     ports:
       - "5001:5001"
     depends_on:
@@ -31,11 +38,11 @@ services:
     networks:
       - factory-network
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:5001/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]
       interval: 15s
       timeout: 10s
       retries: 5
-      start_period: 10s
+      start_period: 20s
 
   frontend:
     build:

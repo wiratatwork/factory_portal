@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -9,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
   imports: [CommonModule, RouterOutlet],
   templateUrl: './shell.component.html',
 })
-export class ShellComponent {
+export class ShellComponent implements OnInit {
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -21,7 +21,6 @@ export class ShellComponent {
 
   @HostListener('window:pageshow')
   onPageShow(): void {
-    // pageshow also fires when browser restores this page from bfcache.
     void this.enforceAuth();
   }
 
@@ -30,8 +29,7 @@ export class ShellComponent {
   }
 
   private async enforceAuth(): Promise<void> {
-    if (this.authService.isAuthenticated()) return;
-    if (await this.authService.refreshSession()) return;
+    if (await this.authService.ensureSession()) return;
     await this.router.navigate(['/login'], { replaceUrl: true });
   }
 }
