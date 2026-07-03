@@ -3,38 +3,61 @@
   <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">Select an application to start your shift</h2>
   <p class="text-toyota-gray max-w-3xl">Central access to production, quality, maintenance, supply chain, and people systems used across the factory.</p>
 </section>
+
+<ng-template #appCard let-app>
+  <button
+    type="button"
+    (click)="openApp(app.name)"
+    class="catalog-card square-card flex flex-col items-center justify-center rounded-xl p-4 text-center hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer"
+  >
+    <div class="icon-surface w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shrink-0" aria-hidden="true">
+      <svg class="w-8 h-8 text-toyota-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+        <path [attr.d]="iconPath(app.icon)" />
+      </svg>
+    </div>
+    <h4 class="font-semibold text-sm leading-snug mb-1">{{ app.name }}</h4>
+    <p class="text-xs text-toyota-gray line-clamp-2">{{ app.description }}</p>
+  </button>
+</ng-template>
+
 <section class="space-y-8" aria-label="Applications by category">
   <article class="surface-panel rounded-xl p-5 sm:p-6">
-    <div class="flex items-center gap-2 mb-4"><h3 class="text-lg font-semibold">Production & Performance</h3><span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ productionApps.length }} apps</span></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="flex items-center gap-2 mb-4">
+      <h3 class="text-lg font-semibold">Production & Performance</h3>
+      <span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ productionApps.length }} apps</span>
+    </div>
+    <div class="app-card-grid grid gap-4">
       @for (app of productionApps; track app.name) {
-        <button type="button" (click)="openApp(app.name)" class="catalog-card text-left rounded-xl p-4 hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer">
-          <h4 class="font-semibold text-sm leading-snug mb-2">{{ app.name }}</h4><p class="text-xs text-toyota-gray mb-3">{{ app.description }}</p><span class="text-xs rounded-full px-2 py-1 font-medium" [class]="badgeClass(app.status)">{{ app.status }}</span>
-        </button>
+        <ng-container *ngTemplateOutlet="appCard; context: { $implicit: app }" />
       }
     </div>
   </article>
+
   <article class="surface-panel rounded-xl p-5 sm:p-6">
-    <div class="flex items-center gap-2 mb-4"><h3 class="text-lg font-semibold">Quality & Maintenance</h3><span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ qualityApps.length }} apps</span></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="flex items-center gap-2 mb-4">
+      <h3 class="text-lg font-semibold">Quality & Maintenance</h3>
+      <span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ qualityApps.length }} apps</span>
+    </div>
+    <div class="app-card-grid grid gap-4">
       @for (app of qualityApps; track app.name) {
-        <button type="button" (click)="openApp(app.name)" class="catalog-card text-left rounded-xl p-4 hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer">
-          <h4 class="font-semibold text-sm leading-snug mb-2">{{ app.name }}</h4><p class="text-xs text-toyota-gray mb-3">{{ app.description }}</p><span class="text-xs rounded-full px-2 py-1 font-medium" [class]="badgeClass(app.status)">{{ app.status }}</span>
-        </button>
+        <ng-container *ngTemplateOutlet="appCard; context: { $implicit: app }" />
       }
     </div>
   </article>
+
   <article class="surface-panel rounded-xl p-5 sm:p-6">
-    <div class="flex items-center gap-2 mb-4"><h3 class="text-lg font-semibold">Supply Chain & People</h3><span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ peopleApps.length }} apps</span></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="flex items-center gap-2 mb-4">
+      <h3 class="text-lg font-semibold">Supply Chain & People</h3>
+      <span class="text-xs rounded-full bg-slate-100 text-slate-600 px-2 py-0.5">{{ peopleApps.length }} apps</span>
+    </div>
+    <div class="app-card-grid grid gap-4">
       @for (app of peopleApps; track app.name) {
-        <button type="button" (click)="openApp(app.name)" class="catalog-card text-left rounded-xl p-4 hover:shadow-lg hover:border-slate-400 transition-all duration-200 cursor-pointer">
-          <h4 class="font-semibold text-sm leading-snug mb-2">{{ app.name }}</h4><p class="text-xs text-toyota-gray mb-3">{{ app.description }}</p><span class="text-xs rounded-full px-2 py-1 font-medium" [class]="badgeClass(app.status)">{{ app.status }}</span>
-        </button>
+        <ng-container *ngTemplateOutlet="appCard; context: { $implicit: app }" />
       }
     </div>
   </article>
 </section>
+
 <section class="surface-panel mt-8 rounded-xl p-5 sm:p-6">
   <h3 class="text-lg font-semibold mb-3">Announcements</h3>
   <ul class="space-y-3 text-sm text-toyota-gray">
