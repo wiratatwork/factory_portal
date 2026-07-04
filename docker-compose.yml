@@ -18,9 +18,9 @@ services:
     image: postgres:16-alpine
     container_name: factory-postgres
     environment:
-      POSTGRES_USER: factory
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      POSTGRES_DB: factory_portal
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: demo
     ports:
       - "5433:5432"
     volumes:
@@ -28,7 +28,7 @@ services:
     networks:
       - factory-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U factory -d factory_portal"]
+      test: ["CMD-SHELL", "pg_isready -U sa -d demo"]
       interval: 10s
       timeout: 5s
       retries: 5
