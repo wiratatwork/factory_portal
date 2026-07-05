@@ -68,3 +68,9 @@ PKCE มี concept อย่างไรบ้าง
 ปัญหา Keycloak ส่ง Code กลับผ่าน URL ถูกดักจับได้ก่อน จะ Login เป็นคนนั้นได้
 PKCE ผู้เริ่ม Login Random code_verifier จากนั้น hash เป็น code_challenge ส่งให้ Keycloak
 เมื่อต้องแลก Code เป็น Token ก็ส่ง code_verifier เพื่อยืนยันว่าเป็น Browser ที่เริ่มต้น Login จริงๆ]
+ถ้า Login ด้วย Browser Edge แล้ว เปิด url ?sso=1 ของ App Child ที่ Browser อื่น มันจะต้อง Login อีกไหม
+[ต้อง Login ใหม่ เพราะ KC SSO Cookie ไม่แชร์กันข้าม Browser]
+KC SSO Cookie รู้ได้อย่างนี้ว่าที่เข้ามาเป็น Browser เดียวกับที่ Login ตอน factory_portal หรือไม่
+[Login factory_portal จะได้ Cookie ของ KC SSO กลับมาด้วย และเมื่อ login app-1 มันจะแนบ Cookie นี้ไปด้วย]
+ทำไมเปิดดูใน Tab Application มีแค่ Cookie fp_bff_session กับ app1_bff_session 
+[มันอยู่ใน Tab Network เส้นที่เรียก URL Auth ของ Keycloak]
