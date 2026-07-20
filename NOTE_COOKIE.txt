@@ -1,0 +1,52 @@
+Cookie คืออะไร
+[ข้อมูลที่เก็บใน Browser และส่งไปกับ HTTP Request ทุกครั้ง เช่น ข้อมูลผู้ใช้]
+Cookie มีกี่ประเภท
+[4 กลุ่ม
+1. ตาม Lifetime คือ Session และ Persistent
+2. ตามแหล่งที่มา คือ First-party และ Thrid-party
+3. ตามวัตถุประสงค์ คือ Necessary / Functional / Analytics / Advertising
+4. ตาม Security Attributes คือ Secure / HttpOnly / SameSite
+5. ตาม Domain Scope คือ Host-only และ Domain Cookie
+]
+Cookie ที่แบ่งตาม Lifetime คือ Session และ Persistent มีหน้าที่ต่างกันอย่างไร
+[
+Session Cookie ถูกลบเมื่อปิด Browser / เก็บในหน่วยความจำ (ของเครื่องใคร)
+Persistent Cookie มีกำหนดวันหมดอายุ / เก็บไว้ในเครื่องผู้ใช้ / เช่น Remember Me, ภาษา, สีธีม และการตั้งค่า
+]
+Session Cookie เหมือนหรือแตกต่างจาก sessionStorage อย่างไร
+[
+Session Cookie ส่งไปกับ HTTP อัติโนมัติ / Server เห็น / Domain ของ Browser เดียวกันเห็น / เก็บข้อมูลผู้ใช้ที่ Log in
+sessionStorage ใช้ JS ส่งเอง / JS เห็น  / เฉพาะ Tab นั้นที่เห็น / เก็บข้อมูลในหน้าเว็บ
+]
+Cookie ที่แบ่งตาม แหล่งที่มา (Origin) คือ First-party และ Thrid-party มีหน้าที่ต่างกันอย่างไร
+[
+First-party Cookie สร้างโดยเว็บไซต์ที่ผู้ใช้กำลังใช้งาน ใช้เพื่อจดจำข้อมูลและปรับปรุงประสบการณ์ภายในเว็บไซต์นั้น
+Third-party Cookie สร้างโดยโดเมนภายนอก ใช้เพื่อการติดตามผู้ใช้ การวิเคราะห์ และการโฆษณาข้ามหลายเว็บไซต์ จึงมีข้อกังวลด้านความเป็นส่วนตัวมากกว่า
+]
+Cookie ที่แบ่งตาม ตามวัตถุประสงค์ คือ Necessary / Functional / Analytics / Advertising มีหน้าที่ต่างกันอย่างไร
+[
+Necessary Cookie: จำเป็นต่อการทำงานพื้นฐานของเว็บไซต์
+Functional Cookie: จดจำการตั้งค่าและความชอบของผู้ใช้เพื่อเพิ่มความสะดวก
+Analytics Cookie: เก็บข้อมูลสถิติการใช้งานเพื่อนำไปวิเคราะห์และปรับปรุงเว็บไซต์
+Advertising Cookie: ใช้ติดตามพฤติกรรมผู้ใช้เพื่อแสดงโฆษณาที่ตรงกับความสนใจและวัดผลแคมเปญโฆษณา
+]
+ตาม Security Attributes คือ Secure / HttpOnly / SameSite
+ตามเว็บที่บอกว่าขออนุญาตให้ Cookie เข้าหมายถึงอะไร
+
+
+นิยมเก็บค่าอะไรลงใน Cookie
+
+Cookie เข้ามาแก้ปัญหาอะไร
+
+ทำไมมันถึงปลอดภัย
+
+SameSite แต่ละค่า เป็นอย่างไร
+
+Cookie เก็บที่ไหน
+
+เมื่อปิด Browser แล้วเปิดใหม่ ทำไมข้อมูลของ Cookie ยังอยู่
+
+Cookie ต่างอย่างไรจาก localStorate และ sessionStorage
+
+ภาษา / Framework อื่น ๆ ที่เป็น Web ใช้ Cookie แบบเดียวกันนี้ด้วยไหม
+
